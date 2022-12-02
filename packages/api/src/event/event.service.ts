@@ -12,6 +12,8 @@ export class EventService {
     params.append('severity', 'MAJOR');
     if (id != null) params.append('area_id', id);
 
+    console.log('id: ', id);
+
     const { data } = await firstValueFrom(this.httpService.get(`events?${params.toString()}`));
 
     return data;

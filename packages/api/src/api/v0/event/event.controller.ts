@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { XApiKeyGuard } from '../../../common/guards/x-api-key.guard';
 import { EventService } from '../../../event/event.service';
 
@@ -11,7 +11,7 @@ export class EventController {
 
   @UseGuards(XApiKeyGuard)
   @Get('views/major-events')
-  getMajorEvents(@Param('area_id') id?: string) {
+  getMajorEvents(@Query('area_id') id?: string) {
     return this.eventService.getMajorEvents(id);
   }
 }

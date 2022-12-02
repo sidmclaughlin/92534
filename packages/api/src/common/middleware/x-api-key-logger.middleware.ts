@@ -1,12 +1,16 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
+import { validate } from 'uuid';
+import { PrismaService } from '../../providers/prisma/prisma.service';
 
 @Injectable()
 export class XApiKeyLoggerMiddlware implements NestMiddleware {
-  use(req: Request, res: Response, next: NextFunction) {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async use(req: Request, res: Response, next: NextFunction) {
     const xApiKey = req.headers['x-api-key'] as string;
-    if (xApiKey != null) {
-      console.log('Api Key Found: ', xApiKey);
+    if (validate(xApiKey)) {
+      await this.prismaService.tokenLog.create({ data: { token: xApiKey, path: req.originalUrl } });
     }
 
     next();
