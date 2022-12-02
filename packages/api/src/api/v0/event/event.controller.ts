@@ -1,6 +1,7 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { XApiKeyGuard } from '../../../common/guards/x-api-key.guard';
 import { EventService } from '../../../event/event.service';
+import { CreateEventDto } from './dtos/create-event.dto';
 
 @Controller({
   path: 'events',
@@ -8,6 +9,12 @@ import { EventService } from '../../../event/event.service';
 })
 export class EventController {
   constructor(private readonly eventService: EventService) {}
+
+  @UseGuards(XApiKeyGuard)
+  @Post()
+  createEvent(@Body() data: CreateEventDto) {
+    return this.eventService.createEvent(data);
+  }
 
   @UseGuards(XApiKeyGuard)
   @Get('views/major-events')

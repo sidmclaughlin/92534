@@ -10,9 +10,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Area {
+  id   String @id
+  name String
+  url  String
+
+  events Event[]
+}
+
+model Event {
+  id               String         @id
+  url              String
+  jurisdiction_url String
+  event_type       EventType
+  event_subtypes   EventSubtype[]
+  severity         Severity
+  status           Status
+  headline         String
+  description      String
+  // areas            Json[]
+  geography        Json
+  roads            Json[]
+  schedule         Json
+  created_at       DateTime
+  updated_at       DateTime
+
+  areas Area[]
+}
+
 model TokenLog {
   id         Int      @id @default(autoincrement())
   token      String
+  method     String
   path       String
   created_at DateTime @default(now())
+}
+
+enum EventType {
+  CONSTRUCTION
+  INCIDENT
+  ROAD_CONDITION
+  SPECIAL_EVENT
+  WEATHER_CONDITION
+}
+
+enum EventSubtype {
+  ACCIDENT
+  SPILL
+  OBSTRUCTION
+  HAZARD
+  ROAD_MAINTENANCE
+  ROAD_CONSTRUCTION
+  EMERGENCY_MAINTENANCE
+  PLANNED_EVENT
+  CROWD
+  HAIL
+  THUNDERSTORM
+  HEAVY_DOWNPOUR
+  STRONG_WINDS
+  BLOWING_DUST
+  SANDSTORM
+  INSECT_SWARMS
+  AVALANCH_HAZARD
+  SURFACE_WATER_HAZARD
+  MUD
+  LOOSE_GRAVEL
+  OIL_ON_HIGHWAY
+  FIRE
+  SIGNAL_LIGHT_FAILURE
+  PARTLY_ICY
+  ICE_COVERED
+  PARTLY_SNOW_PACKED
+  SNOW_PACKED
+  PARTLY_SNOW_COVERED
+  SNOW_COVERED
+  DRIFTING_SNOW
+  POOR_VISIBILITY
+  ALMOST_IMPASSABLE
+  PASSABLE_WITH_CARE
+}
+
+enum Severity {
+  MINOR
+  MODERATE
+  MAJOR
+  UNKNOWN
+}
+
+enum Status {
+  ACTIVE
+  ARCHIVED
 }

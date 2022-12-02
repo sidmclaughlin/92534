@@ -12,6 +12,8 @@ module.exports = {
       { devDependencies: ['**/vite.config.ts', '**/*.e2e-spec.ts', '**/*.spec.ts'] },
     ],
     'import/prefer-default-export': 'off',
+    'max-classes-per-file': 'off',
+    'no-return-await': 'off',
   },
   ignorePatterns: ['**/dist/**/*.js'],
 };

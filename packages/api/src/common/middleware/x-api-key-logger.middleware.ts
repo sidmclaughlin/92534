@@ -10,7 +10,7 @@ export class XApiKeyLoggerMiddlware implements NestMiddleware {
   async use(req: Request, res: Response, next: NextFunction) {
     const xApiKey = req.headers['x-api-key'] as string;
     if (validate(xApiKey)) {
-      await this.prismaService.tokenLog.create({ data: { token: xApiKey, path: req.originalUrl } });
+      await this.prismaService.tokenLog.create({ data: { token: xApiKey, method: req.method, path: req.originalUrl } });
     }
 
     next();
