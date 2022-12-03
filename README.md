@@ -32,7 +32,10 @@ npm install && \
     npm start
 ```
 
-You can now access the projects which are running on the following ports: - Client: http://localhost:3000 - Server: http://localhost:4000
+You can now access the projects which are running on the following ports:
+
+- Client: http://localhost:3000
+- Server: http://localhost:4000
 
 # User Stories
 
