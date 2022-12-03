@@ -16,6 +16,7 @@ module.exports = {
     'max-classes-per-file': 'off',
     'no-return-await': 'off',
     'no-underscore-dangle': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
   ignorePatterns: ['**/dist/**/*.js'],
 };
