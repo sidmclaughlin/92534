@@ -19,8 +19,6 @@ const EventDetail = () => {
   useEffect(() => {
     const { type, coordinates } = data?.data?.geography ?? {};
     if (type === 'Point') {
-      console.log('coordinates: ', coordinates);
-      console.log('new: ', [coordinates[1], coordinates[0]]);
       setPointCoordinates([coordinates[1], coordinates[0]]);
     } else if (type === 'LineString') {
       setLineStringCoordinates(coordinates?.map((c: [number, number]) => [c[1], c[0]]));

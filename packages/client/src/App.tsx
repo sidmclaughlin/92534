@@ -4,7 +4,7 @@ import EventDetail from './pages/Event/EventDetail';
 import EventList from './pages/Event/EventList';
 
 const App = () => (
-  <Container size="lg">
+  <Container size="xl">
     <Routes>
       <Route path="/" element={<Navigate to="/events" />} />
       <Route path="/events/:id" element={<EventDetail />} />

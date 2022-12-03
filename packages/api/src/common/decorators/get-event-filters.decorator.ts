@@ -4,7 +4,7 @@ import { IsNotEmpty, IsOptional, IsString, Matches, validateSync } from 'class-v
 import { Request } from 'express';
 
 export class EventFiltersDto {
-  @Matches(/^((drivebc.ca-\d)(,)?)+$/, { message: 'area_id value is not in the correct format' })
+  @Matches(/^((drivebc.ca-\d+)(,)?)+$/, { message: 'area_id value is not in the correct format' })
   @IsString()
   @IsOptional()
   @IsNotEmpty()
