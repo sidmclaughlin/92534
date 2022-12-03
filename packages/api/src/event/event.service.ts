@@ -41,7 +41,7 @@ export class EventService {
     return result;
   }
 
-  async sync(data: CreateEventDto) {
+  async upsert(data: CreateEventDto) {
     const id = data.id || `drivebc.ca/${uuid()}`;
 
     const areas = data.areas.map((area) => ({

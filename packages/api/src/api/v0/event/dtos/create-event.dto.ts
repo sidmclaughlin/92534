@@ -155,18 +155,3 @@ export class CreateEventDto {
   @IsNotEmpty()
   updated: string;
 }
-
-// id               String         @id
-// url              String
-// jurisdiction_url String
-// event_type       EventType
-// event_subtype    EventSubtype[]
-// severity         Severity
-// status           Status
-// headline         String
-// description      String
-// geography        Json
-// roads            Json[]
-// schedule         Json
-// created_at       DateTime
-// updated_at       DateTime

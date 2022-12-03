@@ -14,6 +14,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'max-classes-per-file': 'off',
     'no-return-await': 'off',
+    'no-underscore-dangle': 'off',
   },
   ignorePatterns: ['**/dist/**/*.js'],
 };
