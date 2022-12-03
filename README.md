@@ -1,5 +1,9 @@
 # 92534
 
+# Prerequisites
+
+This project has been tested on `macOS 12.6` and `node 16.14.1`.
+
 # Environment
 
 These are the contents of the `packages/api/.env` file. Use the Postgres credentials to inspect the database in pgadmin.
