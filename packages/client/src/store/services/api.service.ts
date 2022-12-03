@@ -12,7 +12,7 @@ export const api = createApi({
     getEvents: build.query<ApiResponse<Record<string, any>[]>, { limit: number; offset: number }>({
       query: ({ limit, offset }) => ({ url: `v0/events?limit=${limit}&offset=${offset}` }),
     }),
-    getEvent: build.query<ApiResponse<Record<string, any>[]>, Record<string, any>>({
+    getEvent: build.query<ApiResponse<Record<string, any>>, Record<string, any>>({
       query: (args) => ({ url: `v0/events/${args.id}` }),
     }),
   }),
