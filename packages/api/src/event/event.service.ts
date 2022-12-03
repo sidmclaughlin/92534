@@ -132,10 +132,7 @@ export class EventService {
     const { areas, event_type, start_date } = filters;
     const severity = { severity: { in: ['MAJOR'] } };
 
-    console.log('severity: ', severity);
-    console.log('filters: ', { areas, event_type, severity, start_date });
-
-    const results = await this.getList(pagination, { areas, event_type, severity: { in: ['MAJOR'] }, start_date });
+    const results = await this.getList(pagination, { areas, event_type, ...severity, start_date });
 
     return {
       pagination: results.pagination,

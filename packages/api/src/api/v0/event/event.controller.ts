@@ -25,7 +25,6 @@ export class EventController {
 
   @Get(':id')
   getOne(@Param('id') id: string) {
-    console.log('gg');
     return this.eventService.getOne(id);
   }
 
