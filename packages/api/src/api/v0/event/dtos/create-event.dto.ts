@@ -17,8 +17,8 @@ export class EventGeographyDto {
   @IsNotEmpty()
   type: string;
 
-  @IsArray({ each: true })
-  coordinates: [number, number][];
+  @IsArray()
+  coordinates: [number, number] | [number, number][];
 }
 
 export class EventRoadDto {
@@ -136,9 +136,9 @@ export class CreateEventDto {
 
   @IsDateString()
   @IsNotEmpty()
-  created: string;
+  created_at: string;
 
   @IsDateString()
   @IsNotEmpty()
-  updated: string;
+  updated_at: string;
 }

@@ -37,8 +37,8 @@ export class EventService {
         roads: data.roads as unknown as Prisma.JsonValue,
         schedule: data.schedule,
         start_date: extractStartDateFromEventSchedule(data.schedule),
-        created_at: data.created,
-        updated_at: data.updated,
+        created_at: data.created_at,
+        updated_at: data.updated_at,
       },
     });
 
@@ -66,8 +66,8 @@ export class EventService {
       roads: data.roads as unknown as Prisma.JsonValue,
       schedule: data.schedule,
       start_date: extractStartDateFromEventSchedule(data.schedule),
-      created_at: data.created,
-      updated_at: data.updated,
+      created_at: (data as any).created,
+      updated_at: (data as any).updated,
     };
 
     const result = await this.prisma.event.upsert({
@@ -97,6 +97,9 @@ export class EventService {
         event_type,
         severity,
         start_date,
+      },
+      include: {
+        areas: true,
       },
     });
     const count = await this.prisma.event.count({
