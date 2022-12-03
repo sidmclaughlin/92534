@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { EventFilters, GetEventFilters } from '../../../common/decorators/get-event-filters.decorator';
 import { GetPagination, Pagination } from '../../../common/decorators/get-pagination.decorator';
 import { XApiKeyGuard } from '../../../common/guards/x-api-key.guard';
 import { EventService } from '../../../event/event.service';
@@ -18,8 +19,8 @@ export class EventController {
   }
 
   @Get()
-  getList(@GetPagination() pagination: Pagination) {
-    return this.eventService.getList(pagination);
+  getList(@GetPagination() pagination: Pagination, @GetEventFilters() filters: EventFilters) {
+    return this.eventService.getList(pagination, filters);
   }
 
   @Get(':id')
@@ -30,7 +31,7 @@ export class EventController {
 
   @UseGuards(XApiKeyGuard)
   @Get('views/major-events')
-  getMajorEvents(@Query('area_id') id?: string) {
-    return this.eventService.getMajorEvents(id);
+  getMajorEvents(@GetPagination() pagination: Pagination, @GetEventFilters() filters: EventFilters) {
+    return this.eventService.getMajorEventsByArea(pagination, filters);
   }
 }

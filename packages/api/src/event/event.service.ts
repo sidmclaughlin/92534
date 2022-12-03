@@ -1,10 +1,11 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { firstValueFrom } from 'rxjs';
 import { v4 as uuid } from 'uuid';
 import { CreateEventDto } from '../api/v0/event/dtos/create-event.dto';
+import { EventFilters } from '../common/decorators/get-event-filters.decorator';
 import { Pagination } from '../common/decorators/get-pagination.decorator';
+import { extractStartDateFromEventSchedule } from '../common/utils/extract-start-date-from-event-schedule.util';
 import { normalizeId } from '../common/utils/normalize-id.util';
 import { PrismaService } from '../providers/prisma/prisma.service';
 
@@ -35,36 +36,19 @@ export class EventService {
         geography: data.geography as unknown as Prisma.JsonValue,
         roads: data.roads as unknown as Prisma.JsonValue,
         schedule: data.schedule,
+        start_date: extractStartDateFromEventSchedule(data.schedule),
         created_at: data.created,
         updated_at: data.updated,
       },
     });
 
-    return result;
+    return {
+      data: result,
+    };
   }
 
   async upsert(data: CreateEventDto) {
     const id = data.id ? normalizeId(data.id) : `drivebc.ca-${uuid()}`;
-
-    // const areas = data.areas.map((area) => ({
-    //   create: { id: area.id, name: area.name, url: area.url },
-    //   where: { id: area.id },
-    // }));
-
-    const extractStartDate = () => {
-      if (Object.keys(data.schedule).includes('intervals') && data.schedule.intervals.length > 0) {
-        const [start_datetime] = data.schedule.intervals[0].split('/');
-        const [start_date] = start_datetime.split('T');
-
-        return start_date;
-      }
-      if (Object.keys(data.schedule).includes('recurring_schedules') && data.schedule.recurring_schedules.length > 0) {
-        const { start_date } = data.schedule.recurring_schedules[0];
-        return start_date;
-      }
-
-      return null;
-    };
 
     const mappedData = {
       url: data.url,
@@ -81,7 +65,7 @@ export class EventService {
       geography: data.geography as unknown as Prisma.JsonValue,
       roads: data.roads as unknown as Prisma.JsonValue,
       schedule: data.schedule,
-      start_date: extractStartDate(),
+      start_date: extractStartDateFromEventSchedule(data.schedule),
       created_at: data.created,
       updated_at: data.updated,
     };
@@ -98,14 +82,15 @@ export class EventService {
     return result;
   }
 
-  async getList(pagination: Pagination) {
-    const { limit, offset, areas, event_type, severity, start_date } = pagination;
+  async getList(pagination: Pagination, filters: EventFilters) {
+    const { limit, offset } = pagination;
+    const { areas, event_type, severity, start_date } = filters;
 
-    return await this.prisma.event.findMany({
+    const results = await this.prisma.event.findMany({
       take: limit,
       skip: offset,
       orderBy: {
-        updated_at: 'desc',
+        start_date: 'desc',
       },
       where: {
         areas,
@@ -114,22 +99,47 @@ export class EventService {
         start_date,
       },
     });
+    const count = await this.prisma.event.count({
+      where: {
+        areas,
+        event_type,
+        severity,
+        start_date,
+      },
+    });
+
+    return {
+      pagination: {
+        limit,
+        offset,
+        count,
+      },
+      data: results,
+    };
   }
 
   async getOne(id: string) {
-    return await this.prisma.event.findFirst({
+    const results = await this.prisma.event.findFirst({
       where: { id },
     });
+
+    return {
+      data: results,
+    };
   }
 
-  async getMajorEvents(id?: string) {
-    const params = new URLSearchParams();
-    params.append('format', 'json');
-    params.append('severity', 'MAJOR');
-    if (id != null) params.append('area_id', id);
+  async getMajorEventsByArea(pagination: Pagination, filters: EventFilters) {
+    const { areas, event_type, start_date } = filters;
+    const severity = { severity: { in: ['MAJOR'] } };
 
-    const { data } = await firstValueFrom(this.httpService.get(`events?${params.toString()}`));
+    console.log('severity: ', severity);
+    console.log('filters: ', { areas, event_type, severity, start_date });
 
-    return data;
+    const results = await this.getList(pagination, { areas, event_type, severity: { in: ['MAJOR'] }, start_date });
+
+    return {
+      pagination: results.pagination,
+      data: results.data,
+    };
   }
 }
