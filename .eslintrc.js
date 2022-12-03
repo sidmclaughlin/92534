@@ -6,6 +6,7 @@ module.exports = {
   parserOptions: { project: 'tsconfig.json', tsconfigRootDir: __dirname, sourceType: 'module' },
   rules: {
     'prettier/prettier': ['error', prettierConfig],
+    camelcase: 'off',
     'class-methods-use-this': 'off',
     'import/no-extraneous-dependencies': [
       'error',

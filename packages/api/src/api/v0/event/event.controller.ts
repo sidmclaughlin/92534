@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { GetPagination, Pagination } from '../../../common/decorators/get-pagination.decorator';
 import { XApiKeyGuard } from '../../../common/guards/x-api-key.guard';
 import { EventService } from '../../../event/event.service';
 import { CreateEventDto } from './dtos/create-event.dto';
@@ -14,6 +15,17 @@ export class EventController {
   @Post()
   createEvent(@Body() data: CreateEventDto) {
     return this.eventService.createEvent(data);
+  }
+
+  @Get()
+  getList(@GetPagination() pagination: Pagination) {
+    return this.eventService.getList(pagination);
+  }
+
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    console.log('gg');
+    return this.eventService.getOne(id);
   }
 
   @UseGuards(XApiKeyGuard)

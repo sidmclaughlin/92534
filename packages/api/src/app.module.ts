@@ -7,9 +7,10 @@ import { CronModule } from './providers/cron/cron.module';
 import { CronService } from './providers/cron/cron.service';
 import { GlobalHttpModule } from './providers/http/global-http.module';
 import { PrismaModule } from './providers/prisma/prisma.module';
+import { AreaModule } from './area/area.module';
 
 @Module({
-  imports: [ScheduleModule.forRoot(), GlobalHttpModule, ApiV0Module, EventModule, PrismaModule, CronModule],
+  imports: [ScheduleModule.forRoot(), GlobalHttpModule, ApiV0Module, EventModule, PrismaModule, CronModule, AreaModule],
   exports: [],
 })
 export class AppModule implements NestModule {

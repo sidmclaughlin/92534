@@ -10,20 +10,7 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-
-export class EventAreaDto {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
-
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  @IsString()
-  @IsNotEmpty()
-  url: string;
-}
+import { AreaDto } from '../../area/dtos/area.dto';
 
 export class EventGeographyDto {
   @IsString()
@@ -132,8 +119,8 @@ export class CreateEventDto {
   description: string;
 
   @ValidateNested()
-  @Type(() => EventAreaDto)
-  areas: EventAreaDto[];
+  @Type(() => AreaDto)
+  areas: AreaDto[];
 
   @ValidateNested()
   @Type(() => EventGeographyDto)

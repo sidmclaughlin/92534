@@ -28,10 +28,10 @@ model Event {
   status           Status
   headline         String
   description      String
-  // areas            Json[]
   geography        Json
   roads            Json[]
   schedule         Json
+  start_date       String?
   created_at       DateTime
   updated_at       DateTime
 
@@ -55,6 +55,7 @@ enum EventType {
 }
 
 enum EventSubtype {
+  AVALANCHE_HAZARD
   ACCIDENT
   SPILL
   OBSTRUCTION
