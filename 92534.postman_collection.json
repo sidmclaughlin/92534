@@ -1,0 +1,175 @@
+{
+  "info": {
+    "_postman_id": "076088dd-fbd0-4beb-b146-ca4bf17c90e3",
+    "name": "92534",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "V0",
+      "item": [
+        {
+          "name": "Areas",
+          "item": [
+            {
+              "name": "Get List",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{API_URL}}/v0/areas",
+                  "host": ["{{API_URL}}"],
+                  "path": ["v0", "areas"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Events",
+          "item": [
+            {
+              "name": "Views",
+              "item": [
+                {
+                  "name": "Major Events",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "X-API-Key",
+                        "value": "{{X_API_KEY}}",
+                        "type": "default"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{API_URL}}/v0/events/views/major-events?area_id=drivebc.ca-1",
+                      "host": ["{{API_URL}}"],
+                      "path": ["v0", "events", "views", "major-events"],
+                      "query": [
+                        {
+                          "key": "area_id",
+                          "value": "drivebc.ca-1"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Create",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "X-Api-Key",
+                    "value": "{{X_API_KEY}}",
+                    "type": "default"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n            \"id\": \"drivebc.ca-DBC-45740\",\n            \"url\": \"https://api.open511.gov.bc.ca/events/drivebc.ca/DBC-45740\",\n            \"jurisdiction_url\": \"https://api.open511.gov.bc.ca/jurisdiction\",\n            \"event_type\": \"CONSTRUCTION\",\n            \"event_subtypes\": [\n                \"ROAD_MAINTENANCE\"\n            ],\n            \"severity\": \"MINOR\",\n            \"status\": \"ACTIVE\",\n            \"headline\": \"CONSTRUCTION\",\n            \"description\": \"Highway 16, in both directions. Construction work between Aspen Rd and Hossack Rd (13 km west of Palling). Until Sat Dec 3. Single lane alternating traffic. Expect delays 8:00am to 6:00pm, Monday thru Saturday. Last updated Wed Nov 30 at 11:30 AM PST. (DBC-45740)\",\n            \"geography\": {\n                \"type\": \"Point\",\n                \"coordinates\": [\n                    -126.031086,\n                    54.401777\n                ]\n            },\n            \"roads\": [\n                {\n                    \"from\": \"Aspen Rd\",\n                    \"name\": \"Highway 16\",\n                    \"direction\": \"BOTH\"\n                }\n            ],\n            \"schedule\": {\n                \"intervals\": [\n                    \"2022-10-12T15:00/2022-12-04T07:59\"\n                ]\n            },\n            \"start_date\": \"2022-10-12\",\n            \"created_at\": \"2022-10-11T15:48:04.000Z\",\n            \"updated_at\": \"2022-11-30T19:30:10.000Z\",\n            \"areas\": [\n                {\n                    \"id\": \"drivebc.ca-10\",\n                    \"name\": \"Bulkley Stikine District\",\n                    \"url\": \"http://www.geonames.org/8630133\"\n                }\n            ]\n        }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{API_URL}}/v0/events",
+                  "host": ["{{API_URL}}"],
+                  "path": ["v0", "events"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get List",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{API_URL}}/v0/events?limit=10&offset=0&event_type=INCIDENT,CONSTRUCTION&severity=MINOR,MAJOR&start_date=>2013-12-01&area_id=drivebc.ca-10",
+                  "host": ["{{API_URL}}"],
+                  "path": ["v0", "events"],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "event_type",
+                      "value": "INCIDENT,CONSTRUCTION"
+                    },
+                    {
+                      "key": "severity",
+                      "value": "MINOR,MAJOR"
+                    },
+                    {
+                      "key": "start_date",
+                      "value": ">2013-12-01"
+                    },
+                    {
+                      "key": "area_id",
+                      "value": "drivebc.ca-10"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Get One",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{API_URL}}/v0/events/drivebc.ca-DBC-46373",
+                  "host": ["{{API_URL}}"],
+                  "path": ["v0", "events", "drivebc.ca-DBC-46373"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "API_URL",
+      "value": "http://localhost:4000",
+      "type": "default"
+    },
+    {
+      "key": "X_API_KEY",
+      "value": "4cbad0f8-4e78-4b44-9b01-4d2a847150cf",
+      "type": "default"
+    }
+  ]
+}
